@@ -4,11 +4,13 @@ var AppView = Backbone.View.extend({
 
   initialize: function() {
     this.videos = new Videos();
+    this.render();
   },
-
 
   render: function() {
     this.$el.html(this.template());
+    // overwrite video list class invoke an instance of videolist
+    new VideoListView({el: $('.list'), collection: this.videos}).render();
     return this;
   },
 
