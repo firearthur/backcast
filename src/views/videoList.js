@@ -4,17 +4,20 @@ var VideoListView = Backbone.View.extend({
 
   initialize: function() {
     this.collection.on('sync', this.render, this);
+    this.render();
   },
 
   render: function() {
     this.$el.children().detach();
     this.$el.html(this.template());
-    this.$el.find('.video-list').children().detach();
-    
-    this.collection.forEach((video) => {
-      new VideoListEntryView({model: video})
-    });
-    return this.$el;
+    this.collection.each(function(video) {
+      this.$('.video-list').append(
+        new VideoListEntryView({
+          model: video
+        }).el
+      )
+    })
+    return this
   },
 
   template: templateURL('src/templates/videoList.html')
